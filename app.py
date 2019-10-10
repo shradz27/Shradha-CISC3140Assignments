@@ -1,5 +1,5 @@
 # app.py
-from flask import Flask  # import flask
+from flask import Flask,render_template  # import flask
 import requests
 import json
 
@@ -11,23 +11,7 @@ def hello():  # call method hello
     response = requests.get('http://www.omdbapi.com/?apikey=92582e55&i=tt0120338')
     movie = json.loads(response.text)
     print(movie)
-    return '''
-    <html>
-        <head>
-            <title>Home Page - Microblog</title>
-        </head>
-        <body>
-            
-            <h1>''' + movie['Title'] + '''</h1>
-            <h4>Release Date : ''' + movie['Released'] + '''</h4>
-            <h4>Runtime : ''' + movie['Runtime'] + '''</h4>
-            <h4>Genre : ''' + movie['Genre'] + '''</h4>
-            <h4>Awards : ''' + movie['Awards'] + '''</h4>
-            <img src="''' + movie['Poster'] + '''"/>
-            <p>''' + movie['Plot'] + '''</p>
-        </body>
-    </html>'''
-    return "Hello World!"  # which returns "hello world"
+    return render_template('page.html', content=movie)
 
 
 if __name__ == "__main__":  # on running python app.py
